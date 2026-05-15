@@ -1,82 +1,271 @@
-# NYC 311 Complaint Classification
+# 🚨 AI-Driven Citizen Grievance & Sentiment Analysis System
 
-This project analyzes NYC 311 service request data and builds machine learning models to classify complaint types from complaint descriptions.
+An enterprise-grade Natural Language Processing (NLP) project developed as part of the **Data Science & Machine Learning Internship Program** at Infotact Solutions.
 
-## Project Overview
+This project focuses on building an AI-powered complaint classification and sentiment analysis system using NYC 311 civic complaint data. The system automatically categorizes citizen complaints into relevant departments and identifies urgency levels using sentiment analysis.
 
-The goal of this project is to predict the `Complaint Type` based on the text in the `Descriptor` column. The notebook also includes exploratory data analysis, text preprocessing, n-gram analysis, model comparison, cross-validation, sentiment analysis, and priority mapping.
+---
 
-## Dataset
+# 📌 Project Objective
 
-The dataset used is `NYC311data.csv`.
+Government complaint systems often suffer from:
 
-Main columns used:
+- Slow grievance resolution
+- Manual complaint handling
+- Poor interdepartmental routing
+- Lack of prioritization for urgent issues
 
-- `Complaint Type`
-- `Descriptor`
-- `Borough`
-- `Agency Name`
+This project aims to solve these challenges using:
 
-Only rows with valid `Descriptor` and `Complaint Type` values are used. For efficient processing, the notebook loads the first 10,000 rows.
+- 🧠 Machine Learning
+- 📝 Natural Language Processing (NLP)
+- 📊 Sentiment Analysis
+- ⚡ Automated Complaint Routing
 
-## Features
+---
 
-- Data loading and cleaning
-- Missing value analysis
-- Complaint type distribution
-- Borough-wise complaint analysis
-- Text length analysis
-- Word cloud visualization
-- Unigram, bigram, and trigram frequency distributions
-- TF-IDF feature extraction
-- Train-test split
-- 5-fold cross-validation
-- Model comparison
-- Sentiment analysis using TextBlob
-- Priority mapping
-- Final complaint prediction function
+# 🏛️ Problem Statement
 
-## Models Used
-
-The notebook compares three classification models:
-
-1. Logistic Regression
-2. Naive Bayes
-3. Linear SVM
-
-The best model is selected based on cross-validation accuracy.
-
-## Evaluation Metrics
-
-Models are evaluated using:
-
-- Accuracy
-- Macro F1-score
-- Weighted F1-score
-- Classification report
-- Confusion matrix
-- Cross-validation mean accuracy
-- Cross-validation standard deviation
-
-## Workflow
-
-1. Import required libraries
-2. Load NYC 311 dataset
-3. Inspect dataset structure and missing values
-4. Clean data and select relevant columns
-5. Perform EDA
-6. Preprocess complaint text
-7. Generate word cloud
-8. Analyze n-gram frequencies
-9. Convert text using TF-IDF
-10. Split data into train and test sets
-11. Perform cross-validation
-12. Train and evaluate all models
-13. Select the best model
-14. Add sentiment and priority labels
-15. Predict complaint type for new text
-
-## Example Prediction
+The system accepts raw citizen complaints such as:
 
 ```python
-predict_complaint('Street light not working for 3 days')
+"Street light not working for 3 days"
+```
+
+and automatically:
+
+- Predicts the relevant department
+- Detects sentiment/urgency
+- Assigns priority labels
+
+---
+
+# 📂 Dataset
+
+## Dataset Used
+
+- NYC 311 Service Request Dataset
+
+## Main Features
+
+- Complaint Type
+- Descriptor
+- Borough
+- Agency Name
+
+---
+
+# 🛠️ Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Programming Language | Python |
+| Data Processing | Pandas, NumPy |
+| NLP | NLTK, TextBlob |
+| Visualization | Matplotlib, Seaborn, WordCloud |
+| Machine Learning | Scikit-learn |
+| Model Types | Logistic Regression, Naive Bayes, Linear SVM |
+| Notebook Environment | Jupyter Notebook |
+| Version Control | Git & GitHub |
+
+---
+
+# ✨ Key Features
+
+- ✅ Data Cleaning & Preprocessing
+- ✅ Exploratory Data Analysis (EDA)
+- ✅ Text Preprocessing Pipeline
+- ✅ TF-IDF Vectorization
+- ✅ Unigram, Bigram & Trigram Analysis
+- ✅ WordCloud Visualization
+- ✅ Complaint Type Classification
+- ✅ Cross Validation
+- ✅ Sentiment Analysis
+- ✅ Priority Mapping System
+- ✅ Model Evaluation & Comparison
+- ✅ Real-Time Complaint Prediction Function
+
+---
+
+# 📊 Exploratory Data Analysis (EDA)
+
+The project includes:
+
+- Complaint distribution analysis
+- Borough-wise complaint analysis
+- Text length analysis
+- Most frequent complaint words
+- N-gram frequency visualization
+- Word cloud generation
+
+---
+
+# 🤖 Machine Learning Models Used
+
+The following ML models were trained and evaluated:
+
+1. Logistic Regression
+2. Multinomial Naive Bayes
+3. Linear Support Vector Machine (SVM)
+
+The best-performing model was selected using:
+
+- Cross-validation accuracy
+- Macro F1-score
+- Weighted F1-score
+
+---
+
+# 📈 Evaluation Metrics
+
+Models were evaluated using:
+
+- Accuracy Score
+- Macro F1-Score
+- Weighted F1-Score
+- Classification Report
+- Confusion Matrix
+- Cross Validation Mean Accuracy
+- Cross Validation Standard Deviation
+
+---
+
+# 🔄 Project Workflow
+
+```text
+Data Collection
+        ↓
+Data Cleaning
+        ↓
+EDA & Visualization
+        ↓
+Text Preprocessing
+        ↓
+TF-IDF Vectorization
+        ↓
+Model Training
+        ↓
+Cross Validation
+        ↓
+Model Evaluation
+        ↓
+Sentiment Analysis
+        ↓
+Priority Mapping
+        ↓
+Final Prediction System
+```
+
+---
+
+# 🧹 Text Preprocessing Steps
+
+The NLP pipeline includes:
+
+- Lowercase conversion
+- Stopword removal
+- Tokenization
+- Lemmatization
+- Special character removal
+- URL cleaning
+
+---
+
+# 📌 Example Prediction
+
+```python
+predict_complaint("Street light not working for 3 days")
+```
+
+## Example Output
+
+```python
+Predicted Department: Electrical
+Priority: High
+Sentiment: Negative
+```
+
+---
+
+# 📅 Four-Week Internship Development Roadmap
+
+## ✅ Week 1 — Data Collection, Cleaning & EDA
+
+- Dataset loading
+- Missing value handling
+- Complaint distribution analysis
+- Text preprocessing
+- WordCloud generation
+- N-gram analysis
+
+---
+
+## ✅ Week 2 — Complaint Classification
+
+- TF-IDF feature extraction
+- Model training
+- Logistic Regression
+- Naive Bayes
+- Linear SVM
+- Cross-validation
+
+---
+
+## ✅ Week 3 — Sentiment Analysis & Priority Mapping
+
+- Sentiment classification
+- Urgency scoring
+- Priority label generation
+- TextBlob integration
+
+---
+
+## ✅ Week 4 — Evaluation & Final Optimization
+
+- Model evaluation
+- Confusion matrix
+- Final prediction pipeline
+- GitHub documentation
+- Repository optimization
+
+---
+
+# 📁 Project Structure
+
+```text
+📦 NYC-311-Complaint-Classification
+ ┣ 📂 data
+ ┣ 📂 notebooks
+ ┣ 📂 images
+ ┣ 📜 README.md
+ ┣ 📜 requirements.txt
+ ┗ 📜 complaint_classification.ipynb
+```
+
+---
+
+# 🚀 Future Improvements
+
+- 🔥 FastAPI deployment
+- 🌐 Web dashboard integration
+- 🤖 Transformer-based NLP models (BERT)
+- 📱 Real-time complaint portal
+- ☁️ Cloud deployment
+- 📊 Live analytics dashboard
+
+---
+
+# 📌 GitHub Best Practices Followed
+
+- ✅ Semantic commit messages
+- ✅ Incremental development commits
+- ✅ Clean notebook management
+- ✅ Structured repository organization
+- ✅ Modular ML workflow
+
+---
+
+# 👨‍💻 Contributors
+
+1. Raj Trivedi  
+2. Jagadeeswari J M
