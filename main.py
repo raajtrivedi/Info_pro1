@@ -7,7 +7,9 @@ As per project guidelines:
 - Returns predicted department and priority score
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException, Security
+from fastapi.security.api_key import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import pandas as pd
@@ -22,6 +24,15 @@ import nltk, re
 nltk.download('stopwords', quiet=True)
 nltk.download('wordnet', quiet=True)
 
+# Security setup
+API_KEY = "info-tact-secret-key"
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == API_KEY:
+        return api_key_header
+    raise HTTPException(status_code=403, detail="Could not validate credentials")
+
 # Initialize FastAPI app
 app = FastAPI(
     title="AI-Driven Citizen Grievance & Sentiment Analysis System",
@@ -29,23 +40,25 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Load or train model at startup
+# CORS configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load model at startup (Fail Fast)
 print("Loading model...")
-try:
-    pipeline = joblib.load("complaint_model.pkl")
-    print("Model loaded from file!")
-except:
-    print("Training model from scratch...")
-    df = pd.read_csv("cleaned_data.csv")
-    top10 = df['Complaint Type'].value_counts().head(10).index
-    df = df[df['Complaint Type'].isin(top10)]
-    df['combined_text'] = df['clean_text'] + ' ' + df['Complaint Type'].str.lower()
-    pipeline = Pipeline([
-        ('tfidf', TfidfVectorizer(max_features=5000, ngram_range=(1, 2), min_df=2)),
-        ('model', LinearSVC(class_weight='balanced', max_iter=2000, random_state=42))
-    ])
-    pipeline.fit(df['combined_text'], df['Complaint Type'])
-    print("Model trained!")
+import os
+model_path = "models/complaint_model.pkl" if os.path.exists("models/complaint_model.pkl") else "complaint_model.pkl"
+
+if not os.path.exists(model_path):
+    raise RuntimeError(f"FATAL: Model file not found at {model_path}. Please run train.py first.")
+
+pipeline = joblib.load(model_path)
+print("Model successfully loaded!")
 
 # Preprocessing setup
 stop_words = set(stopwords.words('english')) - {'no', 'not', 'never', 'neither', 'nor'}
@@ -126,7 +139,7 @@ def home():
 # Main prediction endpoint
 # As per guidelines: accepts JSON payload, returns department and priority score
 @app.post("/predict", response_model=ComplaintResponse)
-def predict(request: ComplaintRequest):
+def predict(request: ComplaintRequest, api_key: str = Depends(get_api_key)):
 
     # Step 1: Preprocess the raw complaint
     cleaned = preprocess(request.complaint)
