@@ -1,0 +1,28 @@
+==================================================
+MODEL METRICS & EVALUATION - Citizen Grievance Analysis
+==================================================
+Overall Accuracy: 0.9275 (92.75%)
+
+Classification Report:
+                         precision    recall  f1-score   support
+
+           Animal Abuse       1.00      1.00      1.00        50
+       Blocked Driveway       1.00      1.00      1.00       670
+       Derelict Vehicle       1.00      1.00      1.00       127
+        Illegal Parking       1.00      1.00      1.00       571
+     Noise - Commercial       0.63      0.85      0.73       218
+Noise - Street/Sidewalk       0.71      0.36      0.48       170
+        Noise - Vehicle       0.92      1.00      0.96        78
+  Posting Advertisement       1.00      1.00      1.00        12
+                Traffic       1.00      1.00      1.00        22
+                Vending       1.00      1.00      1.00        27
+
+               accuracy                           0.93      1945
+              macro avg       0.93      0.92      0.92      1945
+           weighted avg       0.93      0.93      0.92      1945
+
+==================================================
+Model Configuration:
+- Vectorizer: TF-IDF (max_features=5000, ngram_range=(1,2))
+- Classifier: Linear Support Vector Machine (class_weight='balanced')
+- Resulting Artifact: models/complaint_model.pkl
